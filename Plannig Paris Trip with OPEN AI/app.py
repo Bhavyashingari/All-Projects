@@ -1,11 +1,8 @@
-# Start your code here!
 import os
 from openai import OpenAI
 
-# Define the model to use
 model = "gpt-3.5-turbo"
 
-# Define the client
 client = OpenAI(api_key=os.environ["OPENAI"])
 
 # Define the conversation
