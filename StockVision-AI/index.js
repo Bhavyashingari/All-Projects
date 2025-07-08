@@ -3,6 +3,9 @@ import OpenAI from "openai"
 
 const tickersArr = []
 
+const API_KEY = "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"
+const POLYGON_API = "X51eMpMzzEvYuukEQS8tJULnx98S4uRY"
+
 const generateReportBtn = document.querySelector('.generate-report-btn')
 
 generateReportBtn.addEventListener('click', fetchStockData)
@@ -42,7 +45,7 @@ async function fetchStockData() {
     loadingArea.style.display = 'flex'
     try {
         const stockData = await Promise.all(tickersArr.map(async (ticker) => {
-            const url = `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dates.startDate}/${dates.endDate}?apiKey=${process.env.POLYGON_API_KEY}`
+            const url = `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dates.startDate}/${dates.endDate}?apiKey=${POLYGON_API}`
             const response = await fetch(url)
             const data = await response.text()
             const status = await response.status
@@ -77,24 +80,34 @@ async function fetchReport(data) {
             ###
             `
         }
-    ]
+    ];
 
     try {
-        const openai = new OpenAI({
-            dangerouslyAllowBrowser: true
-        })
-        const response = await openai.chat.completions.create({
-            model: 'gpt-4',
-            messages: messages,
-            temperature: 1.1,
-            presence_penalty: 0,
-            frequency_penalty: 0
-        })
-        renderReport(response.choices[0].message.content)
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${API_KEY}`,
+                "HTTP-Referer": SITE_URL,
+                "X-Title": SITE_NAME,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                model: "meta-llama/llama-4-maverick",
+                messages: messages
+            })
+        });
 
+        const result = await response.json();
+
+        if (response.ok && result.choices && result.choices.length > 0) {
+            renderReport(result.choices[0].message.content);
+        } else {
+            loadingArea.innerText = 'AI response error. Please try again later.';
+            console.error('AI error:', result);
+        }
     } catch (err) {
-        console.log('Error:', err)
-        loadingArea.innerText = 'Unable to access AI. Please refresh and try again'
+        console.log('Error:', err);
+        loadingArea.innerText = 'Unable to access AI. Please refresh and try again';
     }
 }
 
