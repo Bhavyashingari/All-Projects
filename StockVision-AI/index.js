@@ -2,8 +2,8 @@ import { dates } from '/utils/dates'
 import OpenAI from "openai"
 
 const tickersArr = []
+const API_KEY = process.env.OPENROUTER_API_KEY
 
-const API_KEY = "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"
 const POLYGON_API = "X51eMpMzzEvYuukEQS8tJULnx98S4uRY"
 
 const generateReportBtn = document.querySelector('.generate-report-btn')
