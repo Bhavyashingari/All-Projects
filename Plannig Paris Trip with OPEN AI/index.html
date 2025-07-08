@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Travel Agent</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+
+    <div class="left-panel">
+      <img src="cat-travel-icon.png" alt="Travel Cat" class="cat-img" />
+      <button id="begin-btn">Let's Begin</button>
+    </div>
+
+    <div class="middle-panel hidden" id="form-section">
+      <label>Number of travellers</label>
+      <div class="traveller-counter">
+        <button id="decrease">−</button>
+        <span id="travellers">1</span>
+        <button id="increase">+</button>
+      </div>
+
+      <input type="text" id="from" placeholder="Flying from" value="New York City"/>
+      <input type="text" id="to" placeholder="Flying to" value="Paris"/>
+      <input type="date" id="fromDate" value="2023-11-24" />
+      <input type="date" id="toDate" value="2023-12-05" />
+      <input type="number" id="budget" placeholder="Budget $" value="5000"/>
+
+      <button id="plan-btn">Plan my Trip!</button>
+    </div>
+
+    <div class="right-panel hidden" id="trip-details">
+      <h2>Your Trip</h2>
+      <div class="dates">
+        <button id="date1">→ 25th Nov 23</button>
+        <button id="date2">5th Dec 23 ←</button>
+      </div>
+      <p id="route">New York City → Paris</p>
+
+      <h3>Weather</h3>
+      <div class="info-box">
+        <p>You can expect the weather to be quite mild. Low will be 19° and high will be 25°</p>
+      </div>
+
+      <h3>Flights</h3>
+      <div class="info-box">
+        <p>The best option for you is with Delta Airlines with a layover in Oslo</p>
+        <button>Book</button>
+      </div>
+
+      <h3>Hotel</h3>
+      <div class="info-box">
+        <p>We recommend you stay at the Premiere Inn hotel in central Paris</p>
+        <button>Book</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
